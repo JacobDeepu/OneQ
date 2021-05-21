@@ -8,6 +8,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OneQ" />
+        android:theme="@style/Theme.OneQ">
+        <activity android:name=".business.RegistrationActivity" />
+        <activity android:name=".user.RegistrationActivity" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RegistrationActivity" />
+    </application>
 
 </manifest>
