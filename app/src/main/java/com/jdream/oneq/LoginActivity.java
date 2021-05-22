@@ -10,6 +10,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.jdream.oneq.user.MainUserActivity;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private String email;
     private String password;
     private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         intViews();
 
         mAuth = FirebaseAuth.getInstance();
+
+        // Check if user is signed in (non-null)
+        mCurrentUser = mAuth.getCurrentUser();
+
+        if (mCurrentUser != null) {
+            checkUser(mCurrentUser);
+        }
 
         // Login with email and password
         btnLogin.setOnClickListener(v -> {
@@ -44,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success
                                 Log.d(TAG, "signInWithEmail: success");
+                                mCurrentUser = mAuth.getCurrentUser();
+                                checkUser(mCurrentUser);
                             } else {
                                 // Sign in error
                                 Log.w(TAG, "signInWithEmail: failure", task.getException());
@@ -88,4 +104,35 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    public void checkUser(FirebaseUser currentUser) {
+        String userId = currentUser.getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Check userId exists in users db
+        db.collection("User")
+                .get()
+                .addOnCompleteListener(task -> {
+                    boolean isUser = false;
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            if (document.getId().equals(userId)) {
+                                isUser = true;
+                                break;
+                            }
+                        }
+                        // Update UI based on user
+                        updateUI(isUser);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    private void updateUI(boolean isUser) {
+        if (isUser) {
+            Intent MainUserActivity = new Intent(LoginActivity.this, MainUserActivity.class);
+            startActivity(MainUserActivity);
+            LoginActivity.this.finish();
+        }
+    }
 }
