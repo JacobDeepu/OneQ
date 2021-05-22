@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OneQ">
+        <activity
+            android:name=".user.MainUserActivity"
+            android:label="@string/title_activity_main_user" />
         <activity android:name=".business.RegistrationActivity" />
         <activity android:name=".user.RegistrationActivity" />
         <activity android:name=".LoginActivity">

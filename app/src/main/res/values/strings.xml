@@ -88,4 +88,8 @@
         <item>Sub Registration office</item>
         <item>Village Office</item>
     </array>
+    <string name="title_activity_main_user">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_qrcode">QR-Code</string>
 </resources>
