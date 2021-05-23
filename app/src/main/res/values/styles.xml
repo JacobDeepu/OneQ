@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Style for Circle Image View -->
+    <style name="circleImageView" parent="Theme.OneQ">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <!-- Style for Bottom Rounded Card View -->
+    <style name="bottomRoundCardView" parent="Theme.OneQ">
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeBottomLeft">22dp</item>
+        <item name="cornerSizeBottomRight">22dp</item>
+    </style>
+</resources>
