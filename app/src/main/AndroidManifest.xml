@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OneQ">
         <activity
+            android:name=".business.MainBusinessActivity"
+            android:label="@string/title_activity_main_business" />
+        <activity
             android:name=".user.MainUserActivity"
             android:label="@string/title_activity_main_user" />
         <activity android:name=".business.RegistrationActivity" />

@@ -93,4 +93,6 @@
     <string name="title_profile">Profile</string>
     <string name="title_qrcode">QR-Code</string>
     <string name="logout_button_text">Logout</string>
+    <string name="title_activity_main_business">MainActivity</string>
+    <string name="title_scan_qrcode">Scan Qr Code</string>
 </resources>
