@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.jdream.oneq.business.MainBusinessActivity;
 import com.jdream.oneq.user.MainUserActivity;
 
 import java.util.Objects;
@@ -129,10 +130,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(boolean isUser) {
+        Intent MainActivity;
         if (isUser) {
-            Intent MainUserActivity = new Intent(LoginActivity.this, MainUserActivity.class);
-            startActivity(MainUserActivity);
-            LoginActivity.this.finish();
+            MainActivity = new Intent(LoginActivity.this, MainUserActivity.class);
         }
+        else {
+            MainActivity = new Intent(LoginActivity.this, MainBusinessActivity.class);
+        }
+
+        startActivity(MainActivity);
+        LoginActivity.this.finish();
     }
 }
