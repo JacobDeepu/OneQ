@@ -1,5 +1,6 @@
 package com.jdream.oneq.business;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -270,6 +271,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 .set(inputData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 progressBar.setVisibility(View.GONE);
+                updateUI();
                 Log.d(TAG, "Registration: success");
             } else {
                 progressBar.setVisibility(View.GONE);
@@ -278,5 +280,11 @@ public class RegistrationActivity extends AppCompatActivity {
                         "Failed to Register", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void updateUI() {
+        Intent MainActivity = new Intent(RegistrationActivity.this, MainBusinessActivity.class);
+        startActivity(MainActivity);
+        RegistrationActivity.this.finish();
     }
 }
