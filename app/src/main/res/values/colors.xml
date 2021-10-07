@@ -8,4 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!-- Custom Colors-->
+    <color name="primary">#FF161D6F</color>
+    <color name="primary_variant">#FF004897</color>
+    <color name="secondary">#FFB2F2F8</color>
+    <color name="secondary_variant">#FFD0E8F2</color>
+    <color name="primary_night">#FF8C9EFF</color>
 </resources>
