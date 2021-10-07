@@ -2,9 +2,11 @@ package com.jdream.oneq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -17,9 +19,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private static final String TAG = RegistrationActivity.class.getSimpleName();
     private Button btnContinue;
+    private Button btnLogin;
     private EditText etEmail;
     private EditText etPassword;
     private EditText etRePassword;
+    private ImageView ivTop;
+    private ImageView ivBottom;
     private RadioGroup rgSelectedType;
     private RadioButton rbSelected;
     private String email;
@@ -33,8 +38,26 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        // Find screen height and width
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+
         // Initialize views
         intViews();
+
+        // Set Image view dimension
+        ivTop.getLayoutParams().width = (int) (width * 0.35);
+        ivTop.getLayoutParams().height = (int) (height * 0.18);
+
+        ivBottom.getLayoutParams().width = (int) (width * 0.25);
+        ivBottom.getLayoutParams().height = (int) (height * 0.18);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -72,13 +95,23 @@ public class RegistrationActivity extends AppCompatActivity {
                         });
             }
         });
+
+        btnLogin.setOnClickListener(v -> {
+            Intent loginActivityIntent = new Intent(RegistrationActivity.this,
+                    LoginActivity.class);
+            startActivity(loginActivityIntent);
+            RegistrationActivity.this.finish();
+        });
     }
 
     private void intViews() {
         btnContinue = findViewById(R.id.button_continue);
+        btnLogin = findViewById(R.id.button_login);
         etEmail = findViewById(R.id.edit_text_email);
         etPassword = findViewById(R.id.edit_text_password);
         etRePassword = findViewById(R.id.edit_text_re_password);
+        ivTop = findViewById(R.id.image_view_top);
+        ivBottom = findViewById(R.id.image_view_bottom);
         rgSelectedType = findViewById(R.id.radio_group_type);
     }
 
@@ -87,7 +120,6 @@ public class RegistrationActivity extends AppCompatActivity {
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
         rePassword = etRePassword.getText().toString();
-
     }
 
     public boolean validateInputData() {

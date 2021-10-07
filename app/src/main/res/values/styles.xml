@@ -12,4 +12,9 @@
         <item name="cornerSizeBottomLeft">22dp</item>
         <item name="cornerSizeBottomRight">22dp</item>
     </style>
+    <!-- Style for Rounded Button/EditText -->
+    <style name="roundedContainer" parent="Theme.OneQ">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

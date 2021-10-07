@@ -2,9 +2,11 @@ package com.jdream.oneq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +25,10 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private Button btnLogin;
     private Button btnRegister;
-    private Button btnGuestLogin;
     private EditText etEmail;
     private EditText etPassword;
+    private ImageView ivTop;
+    private ImageView ivBottom;
     private String email;
     private String password;
     private FirebaseAuth mAuth;
@@ -36,8 +39,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        // Find screen height and width
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+
         // Initialize views
         intViews();
+
+        // Set Image view dimension
+        ivTop.getLayoutParams().width = (int) (width * 0.35);
+        ivTop.getLayoutParams().height = (int) (height * 0.25);
+
+        ivBottom.getLayoutParams().width = (int) (width * 0.4);
+        ivBottom.getLayoutParams().height = (int) (height * 0.15);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -71,22 +92,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnGuestLogin.setOnClickListener(v -> {
-            // TODO: Implement method for guest login
-        });
-
         // Register new user
         btnRegister.setOnClickListener(v -> {
             Intent registrationActivityIntent = new Intent(LoginActivity.this,
                     RegistrationActivity.class);
             startActivity(registrationActivityIntent);
+            LoginActivity.this.finish();
         });
     }
 
     private void intViews() {
         btnLogin = findViewById(R.id.button_login);
         btnRegister = findViewById(R.id.button_register);
-        btnGuestLogin = findViewById(R.id.button_guest_login);
+        ivTop = findViewById(R.id.image_view_top);
+        ivBottom = findViewById(R.id.image_view_bottom);
         etEmail = findViewById(R.id.edit_text_email);
         etPassword = findViewById(R.id.edit_text_password);
     }
