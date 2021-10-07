@@ -1,9 +1,11 @@
 package com.jdream.oneq.user.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.jdream.oneq.LoginActivity;
+import com.jdream.oneq.R;
 import com.jdream.oneq.databinding.FragmentUserProfileBinding;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
     private FragmentUserProfileBinding binding;
+    private Button btnLogout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -25,6 +31,18 @@ public class ProfileFragment extends Fragment {
 
         binding = FragmentUserProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        btnLogout = root.findViewById(R.id.button_logout);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent loginActivity = new Intent(getActivity(), LoginActivity.class);
+                startActivity(loginActivity);
+                requireActivity().finishAfterTransition();
+            }
+        });
 
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
