@@ -6,6 +6,8 @@
         <entry key="app/src/main/res/drawable/ic_person_24.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/layout/activity_registration_business.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_registration_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_user_home.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.20104166666666667" />
       </map>
