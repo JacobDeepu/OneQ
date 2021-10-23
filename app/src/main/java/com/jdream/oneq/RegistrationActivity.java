@@ -50,7 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
         int width = metrics.widthPixels;
 
         // Initialize views
-        intViews();
+        initViews();
 
         // Set Image view dimension
         ivTop.getLayoutParams().width = (int) (width * 0.35);
@@ -104,7 +104,7 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
-    private void intViews() {
+    private void initViews() {
         btnContinue = findViewById(R.id.button_continue);
         btnLogin = findViewById(R.id.button_login);
         etEmail = findViewById(R.id.edit_text_email);

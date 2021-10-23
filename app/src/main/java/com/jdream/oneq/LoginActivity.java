@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         int width = metrics.widthPixels;
 
         // Initialize views
-        intViews();
+        initViews();
 
         // Set Image view dimension
         ivTop.getLayoutParams().width = (int) (width * 0.35);
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void intViews() {
+    private void initViews() {
         btnLogin = findViewById(R.id.button_login);
         btnRegister = findViewById(R.id.button_register);
         ivTop = findViewById(R.id.image_view_top);
