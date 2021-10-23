@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.jdream.oneq.R;
 
@@ -112,12 +113,22 @@ public class RegistrationActivity extends AppCompatActivity {
         inputData.put("Phone", phone);
         inputData.put("PinCode", pinCode);
 
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
         progressBar.setVisibility(View.VISIBLE);
 
         db.collection("User")
                 .document(userId)
                 .set(inputData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                mCurrentUser.updateProfile(profileUpdates)
+                        .addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Log.d(TAG, "User profile updated.");
+                            }
+                        });
                 progressBar.setVisibility(View.GONE);
                 updateUI();
                 Log.d(TAG, "Registration: success");

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -264,12 +265,22 @@ public class RegistrationActivity extends AppCompatActivity {
         inputData.put("Type", type);
         inputData.put("ImageUrl", imageUrl);
 
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(companyName)
+                .build();
+
         progressBar.setVisibility(View.VISIBLE);
 
         db.collection("Business").document(category)
                 .collection(type).document(userId)
                 .set(inputData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                mCurrentUser.updateProfile(profileUpdates)
+                        .addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Log.d(TAG, "Business profile updated.");
+                            }
+                        });
                 progressBar.setVisibility(View.GONE);
                 updateUI();
                 Log.d(TAG, "Registration: success");
