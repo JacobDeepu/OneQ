@@ -22,13 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.jdream.oneq.R;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -53,13 +50,13 @@ public class RegistrationActivity extends AppCompatActivity {
     private String type;
     private long phone;
     private int pinCode;
-    private String imageUrl;
+    private Uri filePath;
     private FirebaseUser mCurrentUser;
 
     // ActivityResultLauncher for getting image uri
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(
             new ActivityResultContracts.GetContent(), uri -> {
-                if (uri != null) uploadImage(uri);
+                if (uri != null) filePath = uri;
             });
 
     @Override
@@ -156,30 +153,6 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImage(Uri filePath) {
-        String userId = mCurrentUser.getUid();
-        StorageReference mStorageReference = FirebaseStorage.getInstance()
-                .getReference().child("images/" + userId);
-
-        progressBar.setVisibility(View.VISIBLE);
-
-        mStorageReference.putFile(filePath)
-                .addOnSuccessListener(taskSnapshot ->
-                        mStorageReference.getDownloadUrl()
-                                .addOnCompleteListener(task -> {
-                                    tvSelectImage.setText(R.string.upload_image_success);
-                                    imageUrl = Objects.requireNonNull(task.getResult()).toString();
-                                    progressBar.setVisibility(View.GONE);
-                                    Log.d(TAG, "onComplete: Upload Success");
-                                }))
-                .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(RegistrationActivity.this,
-                            "Failed to Upload Image", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onComplete: Upload Failure");
-                });
-    }
-
     private void getInputData() {
         companyName = etCompanyName.getText().toString();
         address = etAddress.getText().toString();
@@ -242,11 +215,6 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
 
-        if (imageUrl == null) {
-            tvSelectImage.setError("Upload Image");
-            return false;
-        }
-
         return true;
     }
 
@@ -263,10 +231,10 @@ public class RegistrationActivity extends AppCompatActivity {
         inputData.put("Description", description);
         inputData.put("Category", category);
         inputData.put("Type", type);
-        inputData.put("ImageUrl", imageUrl);
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(companyName)
+                .setPhotoUri(filePath)
                 .build();
 
         progressBar.setVisibility(View.VISIBLE);
