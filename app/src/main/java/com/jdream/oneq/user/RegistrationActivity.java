@@ -129,6 +129,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Log.d(TAG, "User profile updated.");
                             }
                         });
+
                 progressBar.setVisibility(View.GONE);
                 updateUI();
                 Log.d(TAG, "Registration: success");
